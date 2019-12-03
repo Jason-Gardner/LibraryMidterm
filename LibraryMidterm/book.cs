@@ -6,41 +6,49 @@ namespace LibraryMidterm
 {
     class Book
     {
-        private string title;
-        private string author;
-        private bool checkedOut = false;
+        public string Title;
 
-        public string Title
-        {
-            get { return title; }
-            set { title = value; }
-        }
+        public string Author;
 
-        public string Author
-        {
-            get { return author; }
-            set { author = value; }
-        }
+        public bool Status;
 
-        public bool CheckedOut
-        {
-            get { return checkedOut; }
-            set { checkedOut = value; }
-        }
+        public DateTime Date;
 
         public Book()
         {
 
         }
 
-        public Book(string title, string author, bool checkedOut)
+        public Book(string title, string author, bool status, DateTime date)
         {
-
+            Title = title;
+            Author = author;
+            Status = status;
+            Date = date;
         }
 
-        public void checkOut(Book book)
+        public string CheckInOption()
         {
-            
+            if (Status)
+            {
+                return "Checked In";
+            }
+            return "Checked Out";
+        }
+        public virtual string Definition()
+        {
+            return $"{Title,-40} {Author,-20} {CheckInOption(),-10}, {Date,-12}";
+        }
+
+        public static Book CSVToBook(string csv)
+        {
+            string[] bookArray = csv.Split(',');
+            return new Book(bookArray[0], bookArray[1], bool.Parse(bookArray[2]), DateTime.Now);
+        }
+
+        public static string BookToCSV(Book book)
+        {
+            return $"{book.Title},{book.Author},{book.Status},{DateTime.Now}";
         }
     }
 }
