@@ -8,30 +8,28 @@
     ".NETCoreApp,Version=v3.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Jason Gardner\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/Users/khyland/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jason Gardner\\Documents\\Projects\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj",
+      "projectUniqueName": "/Users/khyland/Documents/GrandCircusProjects/LibraryMidterm/LibraryMidterm/LibraryMidterm.csproj",
       "projectName": "LibraryMidterm",
-      "projectPath": "C:\\Users\\Jason Gardner\\Documents\\Projects\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj",
-      "packagesPath": "C:\\Users\\Jason Gardner\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jason Gardner\\Documents\\Projects\\LibraryMidterm\\LibraryMidterm\\obj\\",
+      "projectPath": "/Users/khyland/Documents/GrandCircusProjects/LibraryMidterm/LibraryMidterm/LibraryMidterm.csproj",
+      "packagesPath": "/Users/khyland/.nuget/packages/",
+      "outputPath": "/Users/khyland/Documents/GrandCircusProjects/LibraryMidterm/LibraryMidterm/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Jason Gardner\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/khyland/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -62,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }

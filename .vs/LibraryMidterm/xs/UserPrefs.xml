@@ -1,14 +1,17 @@
 ﻿<Properties StartupConfiguration="{E5025EA0-AA3A-4A2E-8A38-E0E7A2FE8F43}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="LibraryMidterm/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="LibraryMidterm/pos.cs">
     <Files>
       <File FileName="LibraryMidterm/Program.cs" Line="13" Column="1" />
+      <File FileName="LibraryMidterm/book.cs" Line="1" Column="1" />
+      <File FileName="LibraryMidterm/booklist.txt" Line="1" Column="1" />
+      <File FileName="LibraryMidterm/pos.cs" Line="9" Column="37" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="LibraryMidterm" expanded="True">
             <Node name="LibraryMidterm" expanded="True">
-              <Node name="Program.cs" selected="True" />
+              <Node name="pos.cs" selected="True" />
             </Node>
           </Node>
         </State>
