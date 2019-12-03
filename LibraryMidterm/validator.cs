@@ -1,17 +1,60 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LibraryMidterm
 {
-    class Validator
+    class Validate
     {
-        // Validation of inputs from user in menu
+        public static bool Validator(string input, string pattern)
+        {
+            if (Regex.IsMatch(input, pattern))
+            {
+                return true;
+            }
 
-        // Validation of search input for title
+            else return false;
+        }
 
-        // Validation of search input for author
+        public static bool titleValidator(Book book, string pattern)
+        {
+            if (Regex.IsMatch(book.Title, pattern))
+            {
+                return true;
+            }
+            else
+            {
+                string test = book.Title.ToLower();
+                pattern = pattern.ToLower();
+                if (test.Contains(pattern))
+                {
+                    return true;
+                }
 
-        // Validation of any continuation data
+                return false;
+            }
+
+        }
+
+        public static bool authorValidator(Book book, string pattern)
+        {
+            if (Regex.IsMatch(book.Author, pattern))
+            {
+                return true;
+            }
+            else
+            {
+                string test = book.Author.ToLower();
+                pattern = pattern.ToLower();
+                if (test.Contains(pattern))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+        }
     }
 }
