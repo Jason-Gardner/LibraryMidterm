@@ -8,23 +8,23 @@
     ".NETCoreApp,Version=v3.0": []
   },
   "packageFolders": {
-    "C:\\Users\\mmoss\\.nuget\\packages\\": {},
+    "C:\\Users\\Jason Gardner\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mmoss\\source\\repos\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj",
+      "projectUniqueName": "C:\\Users\\Jason Gardner\\Documents\\Projects\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj",
       "projectName": "LibraryMidterm",
-      "projectPath": "C:\\Users\\mmoss\\source\\repos\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj",
-      "packagesPath": "C:\\Users\\mmoss\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mmoss\\source\\repos\\LibraryMidterm\\LibraryMidterm\\obj\\",
+      "projectPath": "C:\\Users\\Jason Gardner\\Documents\\Projects\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj",
+      "packagesPath": "C:\\Users\\Jason Gardner\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Jason Gardner\\Documents\\Projects\\LibraryMidterm\\LibraryMidterm\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\mmoss\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Jason Gardner\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -29,7 +29,7 @@ namespace LibraryMidterm
 
         public string CheckInOption()
         {
-            if (Status)
+            if (Status == true)
             {
                 return "Checked In";
             }
@@ -37,18 +37,20 @@ namespace LibraryMidterm
         }
         public virtual string Definition()
         {
-            return $"{Title,-40} {Author,-20} {CheckInOption(),-10}, {Date,-12}";
+            return $"{Title,-40} {Author,-20} {CheckInOption(),-10}, {Date.ToShortDateString(),-12}";
         }
 
         public static Book CSVToBook(string csv)
         {
             string[] bookArray = csv.Split(',');
-            return new Book(bookArray[0], bookArray[1], bool.Parse(bookArray[2]), DateTime.Now);
+            return new Book(bookArray[0], bookArray[1], bool.Parse(bookArray[2]), Convert.ToDateTime(bookArray[3]));
+
         }
 
         public static string BookToCSV(Book book)
         {
-            return $"{book.Title},{book.Author},{book.Status},{DateTime.Now}";
+            return $"{book.Title},{book.Author},{book.Status},{book.Date}";
         }
+
     }
 }

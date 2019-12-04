@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mmoss\\source\\repos\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj": {}
+    "C:\\Users\\Jason Gardner\\Documents\\Projects\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mmoss\\source\\repos\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj": {
+    "C:\\Users\\Jason Gardner\\Documents\\Projects\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mmoss\\source\\repos\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj",
+        "projectUniqueName": "C:\\Users\\Jason Gardner\\Documents\\Projects\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj",
         "projectName": "LibraryMidterm",
-        "projectPath": "C:\\Users\\mmoss\\source\\repos\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj",
-        "packagesPath": "C:\\Users\\mmoss\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mmoss\\source\\repos\\LibraryMidterm\\LibraryMidterm\\obj\\",
+        "projectPath": "C:\\Users\\Jason Gardner\\Documents\\Projects\\LibraryMidterm\\LibraryMidterm\\LibraryMidterm.csproj",
+        "packagesPath": "C:\\Users\\Jason Gardner\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jason Gardner\\Documents\\Projects\\LibraryMidterm\\LibraryMidterm\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\mmoss\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jason Gardner\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
