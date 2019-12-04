@@ -6,7 +6,7 @@ namespace LibraryMidterm
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+           POS.StartBookPOS();
         }
     }
 }
