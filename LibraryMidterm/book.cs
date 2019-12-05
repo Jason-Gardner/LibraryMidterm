@@ -27,23 +27,35 @@ namespace LibraryMidterm
             Date = date;
         }
 
+        public static DateTime createDateTime(string input)
+        {
+            if (input == " ")
+            {
+                return DateTime.Now;
+            }
+            else
+            {
+                return DateTime.Parse(input);
+            }
+        }
+
         public string CheckInOption()
         {
             if (Status == true)
             {
-                return "Checked In";
+                return "Available";
             }
             return "Checked Out";
         }
         public virtual string Definition()
         {
-            return $"{Title,-40} {Author,-20} {CheckInOption(),-10}, {Date.ToShortDateString(),-12}";
+            return $"{Title,-40} {Author,-20} {CheckInOption(),-15} {Date.ToShortDateString(),-15}";
         }
 
         public static Book CSVToBook(string csv)
         {
             string[] bookArray = csv.Split(',');
-            return new Book(bookArray[0], bookArray[1], bool.Parse(bookArray[2]), Convert.ToDateTime(bookArray[3]));
+            return new Book(bookArray[0], bookArray[1], bool.Parse(bookArray[2]), createDateTime(bookArray[3]));
 
         }
 

@@ -19,6 +19,7 @@ namespace LibraryMidterm
             //SaveCurrentInventory();
 
             Options();
+
             bool res = true;
             while (res == true)
             {
@@ -27,33 +28,78 @@ namespace LibraryMidterm
                 {
                     //Print List
                     DisplayCurrentInventory();
-                    Options();
 
                 }
 
                 if (choice == "2")
                 {
                     //Search by title
-                    SearchByTitle();
-                    Options();
+                    Console.Write("Please enter a title: ");
+                    string search = Console.ReadLine();
+                    List<Book> searchList = SearchByTitle(currentInventory, search);
+                    foreach (Book item in searchList)
+                    {
+                        Console.WriteLine($"{item.Title} {item.Author}");
+                    }
 
                 }
 
                 if (choice == "3")
                 {
                     // Search by author
-                    SearchByAuthor();
-                    Options();
+                    Console.Write("Please enter an author: ");
+                    string search = Console.ReadLine();
+                    List<Book> searchList = SearchByAuthor(currentInventory, search);
+                    foreach (Book item in searchList)
+                    {
+                        Console.WriteLine($"{item.Title} {item.Author}");
+                    }
 
                 }
 
                 if (choice == "4")
                 {
-                    // Checkout book
+                    List<Book> searchList = new List<Book>();
+                    Console.WriteLine("How would you like to search for your book?");
+                    string input = Console.ReadLine();
+                    if (input == "title")
+                    {
+                        Console.Write("Please enter a title: ");
+                        string search = Console.ReadLine();
+                        searchList = SearchByTitle(currentInventory, search);
+                        foreach (Book item in searchList)
+                        {
+                            Console.WriteLine($"{item.Title} {item.Author}");
+                        }
+                    }
+                    if (input == "author")
+                    {
+                        Console.Write("Please enter an author: ");
+                        string search = Console.ReadLine();
+                        searchList = SearchByAuthor(currentInventory, search);
+                        foreach (Book item in searchList)
+                        {
+                            Console.WriteLine($"{item.Title} {item.Author}");
+                        }
+                    }
+
+                    Console.WriteLine("Please select the number of the book you would like to rent.");
+                    int bookPick = int.Parse(Console.ReadLine());
+                    foreach (Book selection in searchList)
+                    {
+                        foreach (Book item in currentInventory)
+                        {
+                            if (item.Title == selection.Title && item.Author == selection.Author)
+                            {
+                                CheckOut(currentInventory, item);
+                            }
+                        }
+                    }
                 }
                 if (choice == "5")
                 {
                     // Return book
+                    Return();
                 }
 
                 if (choice == "6")
@@ -61,15 +107,70 @@ namespace LibraryMidterm
                     Console.WriteLine("Good Bye");
                     res = false;
                 }
+
+                Options();
+                SaveCurrentInventory();
             }
         }
-         
-        
+
+        public static void CheckOut(List<Book> bookList, Book yourBook)
+        {
+            Console.WriteLine($"You have selected {yourBook.Title}, would you like to rent this book?");
+            string choice = Console.ReadLine();
+            bool yesInputValid = false;
+            if (choice == "yes")
+            {
+                yesInputValid = true;
+            }
+            if (yesInputValid && yourBook.Status)
+            {
+                yourBook.Status = false;
+                yourBook.Date = (DateTime.Now.AddDays(14));
+                Console.WriteLine($"You have checked out {yourBook.Title} by {yourBook.Author}.");
+                Console.WriteLine($"It is due on {yourBook.Date.ToString("MM/dd/yyyy")}.");
+                SaveCurrentInventory();
+                DisplayCurrentInventory();
+            }
+            else if (!yourBook.Status)
+            {
+                Console.WriteLine($"That book is not available until {yourBook.Date.ToString("MM/dd/yyyy")}");
+                DisplayCurrentInventory();
+            }
+            else
+            {
+                DisplayCurrentInventory();
+            }
+        }
+
+        public static string ReturnBook(Book yourBook)
+        {
+            if (yourBook.Status == true)
+            {
+                yourBook.Status = false;
+                yourBook.Status = true;
+                SaveCurrentInventory();
+                return "Thank you for returning your book!";
+            }
+            return "Book cannot be found";
+        }
+
+        public static void Return()
+        {
+            Console.WriteLine(" Please enter the title of the book");
+            String input = Console.ReadLine();
+            foreach (Book item in currentInventory.Where(w => w.Title == input))
+            {
+                item.Status = true;
+                item.Date = DateTime.Now;
+            }
+        }
+
+
         //Get method that will pull in the current inventory from the CSV file
         private static void GetCurrentInventory()
         {
             //first point the StreamReader object at the text file that holds the current inventory in CSV format
-            StreamReader sr = new StreamReader(@"C:\Temp\TeamProject1\LibraryMidterm\LibraryMidterm\LibraryMidterm\booklist.txt");
+            StreamReader sr = new StreamReader(@"C:\Users\Jason Gardner\Documents\Projects\LibraryMidterm\LibraryMidterm\booklist.txt");
 
             //string array to hold the split CSV row before parsing into necessary Book object
             string[] csvArray;
@@ -89,42 +190,44 @@ namespace LibraryMidterm
             //close the text file when done with File I/O operations
             sr.Close();
         }
-        private static void SearchByTitle()
+        private static List<Book> SearchByTitle(List<Book> bookList, string input)
         {
-            Console.WriteLine("Please Enter the Title");
-            string input = Console.ReadLine();
-            var Books = currentInventory.Where(p => p.Title == input).ToList();
-            Books.ForEach(p =>
+            List<Book> tempList = new List<Book>();
+            foreach (Book item in bookList)
             {
-                Console.WriteLine(p.Definition());
-            });
+                if (item.Title.ToLower().Contains(input.ToLower()))
+                {
+                    tempList.Add(item);
+                }
+            }
+            return tempList;
         }
-        private static void SearchByAuthor()
+
+        private static List<Book> SearchByAuthor(List<Book> bookList, string input)
         {
-            Console.WriteLine("Please Enter the Auther Name");
-            string input = Console.ReadLine();
-            var AuthorName = currentInventory.Where(p => p.Author == input).ToList();
-            AuthorName.ForEach(p =>
+            List<Book> tempList = new List<Book>();
+            foreach (Book item in bookList)
             {
-                Console.WriteLine(p.Definition());
-            });
+                if (item.Author.ToLower().Contains(input.ToLower()))
+                {
+                    tempList.Add(item);
+                }
+            }
+            return tempList;
 
         }
-        //public string CheckInOption()
-        //{
-        //    if (status == true)
-        //    {
-        //        return "Checked In";
-        //    }
-        //    return "Checked Out";
-        //}
-        //method to Save/Update the current inventory
+        
+        public string CheckInOption()
+        {
+            return "";
+        }
+        
         private static void SaveCurrentInventory()
         {
             try
             {
                 //create new streamwriter object
-                StreamWriter sw = new StreamWriter(@"C:\Temp\TeamProject1\LibraryMidterm\LibraryMidterm\LibraryMidterm\booklist.txt");
+                StreamWriter sw = new StreamWriter(@"C:\Users\Jason Gardner\Documents\Projects\LibraryMidterm\LibraryMidterm\booklist.txt");
 
                 //iterate through our list of cars and first make CSV string out of the objects data, and then write that data to the CSV text file
                 foreach (Book item in currentInventory)
@@ -143,27 +246,29 @@ namespace LibraryMidterm
 
         //method to display the MainMenu to navigate through the application
 
-        //method that will display list of current CarLot inventory
         private static void DisplayCurrentInventory()
         {
-            //iterate through the static List of cars
+            Console.WriteLine();
             foreach (Book book in currentInventory)
             {
                 //display the information to the user
                 Console.WriteLine(book.Definition());
             }
+            Console.WriteLine();
         }
 
         public static void Options()
         {
             //make a simple menu with options for the User
-            Console.WriteLine("Welcome to Our Library!!  Please make a selection from the menu below.");
+            Console.WriteLine("**********************************************************************");
+            Console.WriteLine("Welcome to the Bibliotecha!!  Please make a selection from the menu below.");
             Console.WriteLine("1. Print List");
             Console.WriteLine("2. Search by title");
             Console.WriteLine("3. Search by author");
             Console.WriteLine("4. Checkout book");
             Console.WriteLine("5. Return book");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine($"6. Exit");
+            Console.WriteLine("**********************************************************************");
         }
     }
 }

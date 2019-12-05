@@ -1,12 +1,12 @@
-﻿The Rainmaker,John Grisham,true,11-02-2019
-Black Privilege,Charlamagne tha God,true,11-02-2019
-The Alchemist,Paulo Coelho,true,11-02-2019
-Choke,Chuck Palahniuk,true,11-02-2019
-Harry Potter and The Half Blood Prince,J.K. Rowling,true,11-02-2019
-Velocity,Dean Koontz,true,11-02-2019
-Goosebumps,R.L. Stine,false,11-02-2019
-Fight Club,Chuck Palahniuk,false,11-02-2019
-On the Road,Jack Kerouac,true,11-02-2019
-The Catcher in the Rye,J.D. Salinger,true,11-02-2019
-1984,George Orwell,true,11-02-2019
-To the Lighthouse,Virgina Woolf,false,11-02-2019
+The Rainmaker,John Grisham,True,12/4/2019 8:54:31 PM
+Black Privilege,Charlamagne tha God,True,12/4/2019 8:55:42 PM
+The Alchemist,Paulo Coelho,True,12/4/2019 8:55:42 PM
+Choke,Chuck Palahniuk,True,12/18/2019 8:43:02 PM
+Harry Potter and The Half Blood Prince,J.K. Rowling,True,12/4/2019 8:55:42 PM
+Velocity,Dean Koontz,True,12/4/2019 8:55:42 PM
+Goosebumps,R.L. Stine,False,12/4/2019 8:55:42 PM
+Fight Club,Chuck Palahniuk,False,12/4/2019 8:55:42 PM
+On the Road,Jack Kerouac,True,12/4/2019 8:55:42 PM
+The Catcher in the Rye,J.D. Salinger,True,12/4/2019 8:55:42 PM
+1984,George Orwell,True,12/4/2019 8:55:42 PM
+To the Lighthouse,Virgina Woolf,False,12/4/2019 8:55:42 PM
