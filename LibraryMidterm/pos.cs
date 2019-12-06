@@ -8,7 +8,6 @@ namespace LibraryMidterm
 {
     class POS
     {
-
         //static List of Book objects is used to hold the most current inventory
 
         public static List<Book> currentInventory = new List<Book>();
@@ -16,99 +15,151 @@ namespace LibraryMidterm
         public static void StartBookPOS()
         {
             GetCurrentInventory();
-            //SaveCurrentInventory();
-
-            Options();
 
             bool res = true;
             while (res == true)
             {
+
+                Options();
                 var choice = Console.ReadLine();
+                Validate.OptionInputValidation(choice);
                 if (choice == "1")
                 {
                     //Print List
                     DisplayCurrentInventory();
 
                 }
-
                 if (choice == "2")
                 {
                     //Search by title
+
                     Console.Write("Please enter a title: ");
-                    string search = Console.ReadLine();
-                    List<Book> searchList = SearchByTitle(currentInventory, search);
+                    string titleInput = Console.ReadLine();
+                    while (Validate.NullCheck(titleInput))
+                    {
+                        Console.Write("Please enter a title:");
+                        titleInput = Console.ReadLine();
+                    }
+                    List<Book> searchList = SearchByTitle(currentInventory, titleInput);
+                    Console.WriteLine($"\nSearch Results:");
+                    int count = 1;
                     foreach (Book item in searchList)
                     {
-                        Console.WriteLine($"{item.Title} {item.Author}");
+                        Console.WriteLine($"{count}) {item.Title} by {item.Author}");
+                        count++;
                     }
+                    Console.WriteLine();
 
                 }
-
                 if (choice == "3")
                 {
-                    // Search by author
+                    //Search by author
                     Console.Write("Please enter an author: ");
-                    string search = Console.ReadLine();
-                    List<Book> searchList = SearchByAuthor(currentInventory, search);
-                    foreach (Book item in searchList)
+                    string authorInput = Console.ReadLine();
+                    while (Validate.NullCheck(authorInput))
                     {
-                        Console.WriteLine($"{item.Title} {item.Author}");
+                        Console.Write("Please enter a author: ");
+                        authorInput = Console.ReadLine();
                     }
 
+                    List<Book> searchList = SearchByAuthor(currentInventory, authorInput);
+                    Console.WriteLine($"\nSearch Results:");
+                    int count = 1;
+                    foreach (Book item in searchList)
+                    {
+                        Console.WriteLine($"{count}) {item.Title} by {item.Author}");
+                        count++;
+                    }
+                    Console.WriteLine();
                 }
+
 
                 if (choice == "4")
                 {
                     List<Book> searchList = new List<Book>();
-                    Console.WriteLine("How would you like to search for your book?");
+                    Console.WriteLine("How would you like to search for your book? Enter a title or author.");
                     string input = Console.ReadLine();
+                    while (!Validate.Validator(input.ToLower(), @"^[(author)|(title)]$"))
+                    {
+                        Console.WriteLine("Please enter a valid input.");
+                        input = Console.ReadLine();
+                    }
                     if (input == "title")
                     {
                         Console.Write("Please enter a title: ");
-                        string search = Console.ReadLine();
-                        searchList = SearchByTitle(currentInventory, search);
+                        string titleInput = Console.ReadLine();
+                        while (Validate.NullCheck(titleInput))
+                        {
+                            Console.Write("Please enter a title:");
+                            titleInput = Console.ReadLine();
+                        }
+                        searchList = SearchByTitle(currentInventory, titleInput);
+                        Console.WriteLine($"\nSearch Results:");
+                        int count = 1;
                         foreach (Book item in searchList)
                         {
-                            Console.WriteLine($"{item.Title} {item.Author}");
+                            Console.WriteLine($"{count}) {item.Title} by {item.Author}");
+                            count++;
                         }
+                        Console.WriteLine();
+
+                        Console.WriteLine("Please select the number of the book you would like to rent.");
+                        int bookPick = int.Parse(Console.ReadLine());
+                        CheckOut(currentInventory, searchList[bookPick - 1]);
                     }
+
                     if (input == "author")
                     {
-                        Console.Write("Please enter an author: ");
+                        Console.Write("Please enter an author ");
                         string search = Console.ReadLine();
-                        searchList = SearchByAuthor(currentInventory, search);
+                        while (Validate.NullCheck(search))
+                        {
+                            Console.Write("Please enter a title:");
+                            search = Console.ReadLine();
+                        }
+                        searchList = SearchByTitle(currentInventory, search);
+                        Console.WriteLine($"\nSearch Results:");
+                        int count = 1;
                         foreach (Book item in searchList)
                         {
-                            Console.WriteLine($"{item.Title} {item.Author}");
+                            Console.WriteLine($"{count}) {item.Title} by {item.Author}");
+                            count++;
+                        }
+                        Console.WriteLine();
+
+                        Console.WriteLine("Please select the number of the book you would like to rent.");
+                        int bookPick = int.Parse(Console.ReadLine());
+                        CheckOut(currentInventory, searchList[bookPick - 1]);
+                    }
+
+                }
+                if (choice == "5")
+                {
+                    // Return book
+                    int count = 1;
+                    List<Book> outList = new List<Book>();
+                    Console.WriteLine("Here are the currently checked out books:");
+                    foreach (Book item in currentInventory)
+                    {
+                        if (item.Status == false)
+                        {
+                            Console.WriteLine($"{count}) {item.Title} by {item.Author}");
+                            outList.Add(item);
+                            count++;
                         }
                     }
 
                     Console.WriteLine("Please select the number of the book you would like to rent.");
                     int bookPick = int.Parse(Console.ReadLine());
-                    foreach (Book selection in searchList)
-                    {
-                        foreach (Book item in currentInventory)
-                        {
-                            if (item.Title == selection.Title && item.Author == selection.Author)
-                            {
-                                CheckOut(currentInventory, item);
-                            }
-                        }
-                    }
-                }
-                if (choice == "5")
-                {
-                    // Return book
-                    Return();
+                    Return(currentInventory, outList[bookPick - 1]);
+
                 }
 
                 if (choice == "6")
                 {
-                    Console.WriteLine("Good Bye");
+                    Console.WriteLine("Thank you for using the Bibliotecha Library System. Goodbye!");
                     res = false;
                 }
-
-                Options();
                 SaveCurrentInventory();
             }
         }
@@ -131,37 +182,30 @@ namespace LibraryMidterm
                 SaveCurrentInventory();
                 DisplayCurrentInventory();
             }
+
+        }
+
+        public static void Return(List<Book> bookList, Book yourBook)
+        {
+            Console.WriteLine($"You have selected {yourBook.Title}, would you like to return this book?");
+            string choice = Console.ReadLine();
+            bool yesInputValid = false;
+            if (choice == "yes")
+            {
+                yesInputValid = true;
+            }
+            if (yesInputValid && !yourBook.Status)
+            {
+                yourBook.Status = true;
+                yourBook.Date = DateTime.Now;
+                Console.WriteLine($"You have checked in {yourBook.Title} by {yourBook.Author}.");
+                Console.WriteLine("Thank you!");
+                SaveCurrentInventory();
+            }
             else if (!yourBook.Status)
             {
                 Console.WriteLine($"That book is not available until {yourBook.Date.ToString("MM/dd/yyyy")}");
                 DisplayCurrentInventory();
-            }
-            else
-            {
-                DisplayCurrentInventory();
-            }
-        }
-
-        public static string ReturnBook(Book yourBook)
-        {
-            if (yourBook.Status == true)
-            {
-                yourBook.Status = false;
-                yourBook.Status = true;
-                SaveCurrentInventory();
-                return "Thank you for returning your book!";
-            }
-            return "Book cannot be found";
-        }
-
-        public static void Return()
-        {
-            Console.WriteLine(" Please enter the title of the book");
-            String input = Console.ReadLine();
-            foreach (Book item in currentInventory.Where(w => w.Title == input))
-            {
-                item.Status = true;
-                item.Date = DateTime.Now;
             }
         }
 
@@ -216,12 +260,12 @@ namespace LibraryMidterm
             return tempList;
 
         }
-        
+
         public string CheckInOption()
         {
             return "";
         }
-        
+
         private static void SaveCurrentInventory()
         {
             try
@@ -249,10 +293,39 @@ namespace LibraryMidterm
         private static void DisplayCurrentInventory()
         {
             Console.WriteLine();
-            foreach (Book book in currentInventory)
+            Console.WriteLine($"Select an option\n1) All Books\n2) Only Available Books");
+            string lchoice = Console.ReadLine();
+
+            while (!Validate.Validator(lchoice, @"^[1-2]{1}$"))
             {
-                //display the information to the user
-                Console.WriteLine(book.Definition());
+                Console.WriteLine("Please enter a valid choice: ");
+                lchoice = Console.ReadLine();
+            }
+
+            int invChoice = int.Parse(lchoice);
+            if (invChoice == 1)
+            {
+                foreach (Book item in currentInventory)
+                {
+                    if (item.Status == true)
+                    {
+                        Console.WriteLine($"{item.Title,-40} by {item.Author,-25} Available");
+                    }
+                    if (item.Status == false)
+                    {
+                        Console.WriteLine($"{item.Title,-40} by {item.Author,-25} Unavailable until {item.Date.ToString("MM/dd/yyyy"),-20}");
+                    }
+                }
+            }
+            if (invChoice == 2)
+            {
+                foreach (Book item in currentInventory)
+                {
+                    if (item.Status == true)
+                    {
+                        Console.WriteLine($"{item.Title,-40} by {item.Author,-25} Available");
+                    }
+                }
             }
             Console.WriteLine();
         }
