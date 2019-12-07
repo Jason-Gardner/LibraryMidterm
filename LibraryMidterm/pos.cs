@@ -8,30 +8,31 @@ namespace LibraryMidterm
 {
     class POS
     {
-        //static List of Book objects is used to hold the most current inventory
+        //Static list we will use to track the movement of books and checkout dates
 
         public static List<Book> currentInventory = new List<Book>();
 
         public static void StartBookPOS()
         {
+            // Builds the current book inventory from a text file using streamreader
             GetCurrentInventory();
 
             bool res = true;
             while (res == true)
             {
-
+                // Initializes the POS for the user and gives them visual options to select what they want to do
                 Options();
                 var choice = Console.ReadLine();
                 Validate.OptionInputValidation(choice);
                 if (choice == "1")
                 {
-                    //Print List
+                    //Prints the current list of books, allowing you to select between all books and available books
                     DisplayCurrentInventory();
 
                 }
                 if (choice == "2")
                 {
-                    //Search by title
+                    //Allows the user to search the library by title
 
                     Console.Write("Please enter a title: ");
                     string titleInput = Console.ReadLine();
@@ -40,7 +41,10 @@ namespace LibraryMidterm
                         Console.Write("Please enter a title:");
                         titleInput = Console.ReadLine();
                     }
+
+                    // Holds the search results based on the user input, prints out a list to the console
                     List<Book> searchList = SearchByTitle(currentInventory, titleInput);
+
                     Console.WriteLine($"\nSearch Results:");
                     int count = 1;
                     foreach (Book item in searchList)
@@ -53,7 +57,7 @@ namespace LibraryMidterm
                 }
                 if (choice == "3")
                 {
-                    //Search by author
+                    //Allows the user to search the library by author
                     Console.Write("Please enter an author: ");
                     string authorInput = Console.ReadLine();
                     while (Validate.NullCheck(authorInput))
@@ -62,7 +66,9 @@ namespace LibraryMidterm
                         authorInput = Console.ReadLine();
                     }
 
+                    // Holds the search results based on the user input, prints out a list to the console
                     List<Book> searchList = SearchByAuthor(currentInventory, authorInput);
+
                     Console.WriteLine($"\nSearch Results:");
                     int count = 1;
                     foreach (Book item in searchList)
@@ -76,14 +82,28 @@ namespace LibraryMidterm
 
                 if (choice == "4")
                 {
+                    //This is the area where the user searches for the book they want to checkout and calls a method
+                    // to manipulate the data within the list to change the book to being checked out
+
                     List<Book> searchList = new List<Book>();
                     Console.WriteLine("How would you like to search for your book? Enter a title or author.");
                     string input = Console.ReadLine();
-                    while (!Validate.Validator(input.ToLower(), @"^[(author)|(title)]$"))
+                    do
                     {
-                        Console.WriteLine("Please enter a valid input.");
-                        input = Console.ReadLine();
-                    }
+                        if (Validate.NullCheck(input))
+                        {
+                            Console.WriteLine("Please enter a valid input.");
+                            input = Console.ReadLine();
+                        }
+
+                        if (!Validate.Validator(input.ToLower(), @"\b(author|title)\b"))
+                        {
+                            Console.WriteLine("Please enter a valid input.");
+                            input = Console.ReadLine();
+                        }
+
+                    } while (input.ToLower() != "title" && input.ToLower() != "author");
+
                     if (input == "title")
                     {
                         Console.Write("Please enter a title: ");
@@ -129,13 +149,18 @@ namespace LibraryMidterm
 
                         Console.WriteLine("Please select the number of the book you would like to rent.");
                         int bookPick = int.Parse(Console.ReadLine());
+                        while (Validate.NullCheck(Convert.ToString(bookPick)))
+                        {
+                            Console.Write("Please enter a correct choice:");
+                            bookPick = int.Parse(Console.ReadLine());
+                        }
                         CheckOut(currentInventory, searchList[bookPick - 1]);
                     }
 
                 }
                 if (choice == "5")
                 {
-                    // Return book
+                    // Displays the list of returnable books and allows the user to select one based on what is found in the list
                     int count = 1;
                     List<Book> outList = new List<Book>();
                     Console.WriteLine("Here are the currently checked out books:");
@@ -157,6 +182,7 @@ namespace LibraryMidterm
 
                 if (choice == "6")
                 {
+                    // Presents the user with an ending message upon exiting the program
                     Console.WriteLine("Thank you for using the Bibliotecha Library System. Goodbye!");
                     res = false;
                 }
@@ -164,16 +190,30 @@ namespace LibraryMidterm
             }
         }
 
+
+        // These are the methods that manipulate the data in the background, including search, checkout and return.
+
         public static void CheckOut(List<Book> bookList, Book yourBook)
         {
             Console.WriteLine($"You have selected {yourBook.Title}, would you like to rent this book?");
             string choice = Console.ReadLine();
-            bool yesInputValid = false;
-            if (choice == "yes")
+            do
             {
-                yesInputValid = true;
-            }
-            if (yesInputValid && yourBook.Status)
+                if (Validate.NullCheck(choice))
+                {
+                    Console.WriteLine("Please enter a valid input.");
+                    choice = Console.ReadLine();
+                }
+
+                if (!Validate.Validator(choice.ToLower(), @"\b(yes|no)\b"))
+                {
+                    Console.WriteLine("Please enter a valid input.");
+                    choice = Console.ReadLine();
+                }
+
+            } while (choice.ToLower() != "yes" && choice.ToLower() != "no");
+
+            if (choice.ToLower() == "yes" && yourBook.Status)
             {
                 yourBook.Status = false;
                 yourBook.Date = (DateTime.Now.AddDays(14));
@@ -189,12 +229,24 @@ namespace LibraryMidterm
         {
             Console.WriteLine($"You have selected {yourBook.Title}, would you like to return this book?");
             string choice = Console.ReadLine();
-            bool yesInputValid = false;
-            if (choice == "yes")
+            do
             {
-                yesInputValid = true;
-            }
-            if (yesInputValid && !yourBook.Status)
+                if (Validate.NullCheck(choice))
+                {
+                    Console.WriteLine("Please enter a valid input.");
+                    choice = Console.ReadLine();
+                }
+
+                if (!Validate.Validator(choice.ToLower(), @"\b(yes|no)\b"))
+                {
+                    Console.WriteLine("Please enter a valid input.");
+                    choice = Console.ReadLine();
+                }
+
+            } while (choice.ToLower() != "yes" && choice.ToLower() != "no");
+
+            
+            if (choice.ToLower() == "yes" && !yourBook.Status)
             {
                 yourBook.Status = true;
                 yourBook.Date = DateTime.Now;
@@ -202,7 +254,8 @@ namespace LibraryMidterm
                 Console.WriteLine("Thank you!");
                 SaveCurrentInventory();
             }
-            else if (!yourBook.Status)
+
+            if (choice.ToLower() == "yes" && !yourBook.Status)
             {
                 Console.WriteLine($"That book is not available until {yourBook.Date.ToString("MM/dd/yyyy")}");
                 DisplayCurrentInventory();
@@ -210,7 +263,7 @@ namespace LibraryMidterm
         }
 
 
-        //Get method that will pull in the current inventory from the CSV file
+        //This method will pull in the current inventory from the CSV file and store it to a list.
         private static void GetCurrentInventory()
         {
             //first point the StreamReader object at the text file that holds the current inventory in CSV format
@@ -234,6 +287,8 @@ namespace LibraryMidterm
             //close the text file when done with File I/O operations
             sr.Close();
         }
+        
+        // Search method, adds hits to a list and returns the list for viewing to the user.
         private static List<Book> SearchByTitle(List<Book> bookList, string input)
         {
             List<Book> tempList = new List<Book>();
@@ -266,6 +321,7 @@ namespace LibraryMidterm
             return "";
         }
 
+        // Pushes the list back to the text file at the end of the current option chosed.
         private static void SaveCurrentInventory()
         {
             try
@@ -288,7 +344,7 @@ namespace LibraryMidterm
             }
         }
 
-        //method to display the MainMenu to navigate through the application
+        //Method to display the MainMenu, allowing user to navigate through the application.
 
         private static void DisplayCurrentInventory()
         {
@@ -332,7 +388,8 @@ namespace LibraryMidterm
 
         public static void Options()
         {
-            //make a simple menu with options for the User
+            //Makes a simple menu with options for the User.
+
             Console.WriteLine("**********************************************************************");
             Console.WriteLine("Welcome to the Bibliotecha!!  Please make a selection from the menu below.");
             Console.WriteLine("1. Print List");

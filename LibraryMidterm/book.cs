@@ -4,6 +4,8 @@ using System.Text;
 
 namespace LibraryMidterm
 {
+    // This is the book class, defines our book and gives some definition.
+
     class Book
     {
         public string Title;
