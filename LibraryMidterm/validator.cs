@@ -19,74 +19,6 @@ namespace LibraryMidterm
             return false;
         }
 
-        public static bool titleInputValidator(string titleInput, string pattern)
-        {
-            if (Regex.IsMatch(titleInput, pattern))
-            {
-                return true;
-            }
-            else if (titleInput == null || titleInput == " " || titleInput == string.Empty)
-            {
-                Console.WriteLine("Input cannot be empty or null.");
-                return false;
-            }
-            else
-            {
-                Console.WriteLine("Please enter a valid input of numbers or letters.");
-                return false;
-            }
-        }
-        public static bool titleValidator(Book book, string pattern)
-        {
-            if (Regex.IsMatch(book.Title, pattern))
-            {
-                return true;
-            }
-            else
-            {
-                string test = book.Title.ToLower();
-                pattern = pattern.ToLower();
-                if (test.Contains(pattern))
-                {
-                    return true;
-                }
-                return false;
-            }
-        }
-        public static bool authorInputValidator(string input, string pattern)
-        {
-            if (Regex.IsMatch(input, pattern))
-            {
-                return true;
-            }
-            else
-            {
-                string test = input.ToLower();
-                pattern = pattern.ToLower();
-                if (test.Contains(pattern))
-                {
-                    return true;
-                }
-                return false;
-            }
-        }
-        public static bool authorValidator(Book book, string pattern)
-        {
-            if (Regex.IsMatch(book.Author, pattern))
-            {
-                return true;
-            }
-            else
-            {
-                string test = book.Author.ToLower();
-                pattern = pattern.ToLower();
-                if (test.Contains(pattern))
-                {
-                    return true;
-                }
-                return false;
-            }
-        }
         public static bool NullCheck(string input)
         {
             if (input == null || input == string.Empty || input == " ")
@@ -98,6 +30,7 @@ namespace LibraryMidterm
                 return false;
             }
         }
+
         public static bool OptionInputValidation(string input)
         {
             {

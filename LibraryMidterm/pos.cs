@@ -38,7 +38,7 @@ namespace LibraryMidterm
                     string titleInput = Console.ReadLine();
                     while (Validate.NullCheck(titleInput))
                     {
-                        Console.Write("Please enter a title:");
+                        Console.WriteLine("Please enter a title: ");
                         titleInput = Console.ReadLine();
                     }
 
@@ -46,11 +46,15 @@ namespace LibraryMidterm
                     List<Book> searchList = SearchByTitle(currentInventory, titleInput);
 
                     Console.WriteLine($"\nSearch Results:");
-                    int count = 1;
+                    int count = 0;
                     foreach (Book item in searchList)
                     {
-                        Console.WriteLine($"{count}) {item.Title} by {item.Author}");
+                        Console.WriteLine($"{count + 1}) {item.Title} by {item.Author}");
                         count++;
+                    }
+                    if (count == 0)
+                    {
+                        Console.WriteLine("No search results were found, please try again.");
                     }
                     Console.WriteLine();
 
@@ -62,7 +66,7 @@ namespace LibraryMidterm
                     string authorInput = Console.ReadLine();
                     while (Validate.NullCheck(authorInput))
                     {
-                        Console.Write("Please enter a author: ");
+                        Console.WriteLine("Please enter an author: ");
                         authorInput = Console.ReadLine();
                     }
 
@@ -70,11 +74,15 @@ namespace LibraryMidterm
                     List<Book> searchList = SearchByAuthor(currentInventory, authorInput);
 
                     Console.WriteLine($"\nSearch Results:");
-                    int count = 1;
+                    int count = 0;
                     foreach (Book item in searchList)
                     {
-                        Console.WriteLine($"{count}) {item.Title} by {item.Author}");
+                        Console.WriteLine($"{count + 1}) {item.Title} by {item.Author}");
                         count++;
+                    }
+                    if (count == 0)
+                    {
+                        Console.WriteLine("No search results were found, please try again.");
                     }
                     Console.WriteLine();
                 }
@@ -86,19 +94,19 @@ namespace LibraryMidterm
                     // to manipulate the data within the list to change the book to being checked out
 
                     List<Book> searchList = new List<Book>();
-                    Console.WriteLine("How would you like to search for your book? Enter a title or author.");
+                    Console.WriteLine("How would you like to search for your book? Enter a 'Title' or 'Author'.");
                     string input = Console.ReadLine();
                     do
                     {
                         if (Validate.NullCheck(input))
                         {
-                            Console.WriteLine("Please enter a valid input.");
+                            Console.WriteLine("Please enter a valid input: ");
                             input = Console.ReadLine();
                         }
 
                         if (!Validate.Validator(input.ToLower(), @"\b(author|title)\b"))
                         {
-                            Console.WriteLine("Please enter a valid input.");
+                            Console.WriteLine("Please enter 'Title' or 'Author': ");
                             input = Console.ReadLine();
                         }
 
@@ -110,7 +118,7 @@ namespace LibraryMidterm
                         string titleInput = Console.ReadLine();
                         while (Validate.NullCheck(titleInput))
                         {
-                            Console.Write("Please enter a title:");
+                            Console.WriteLine("Please enter a title:");
                             titleInput = Console.ReadLine();
                         }
                         searchList = SearchByTitle(currentInventory, titleInput);
@@ -122,39 +130,91 @@ namespace LibraryMidterm
                             count++;
                         }
                         Console.WriteLine();
+                        if (count == 0)
+                        {
+                            Console.WriteLine("No search results were found, please try again.");
+                        }
+                        if (count >= 1)
+                        {
+                            Console.Write("Please enter the number of the book you would like to check out: ");
+                            string bookPick = Console.ReadLine();
+                            int checkBook;
 
-                        Console.WriteLine("Please select the number of the book you would like to rent.");
-                        int bookPick = int.Parse(Console.ReadLine());
-                        CheckOut(currentInventory, searchList[bookPick - 1]);
+                            do
+                            {
+                                if (Validate.NullCheck(bookPick))
+                                {
+                                    Console.WriteLine("Please enter a valid input.");
+                                    bookPick = Console.ReadLine();
+                                }
+
+                                if (int.TryParse(bookPick, out checkBook))
+                                {
+                                    checkBook = int.Parse(bookPick);
+                                    if (checkBook >= searchList.Count)
+                                    {
+                                        Console.WriteLine("That number does not exist, please enter a number above.");
+                                        bookPick = Console.ReadLine();
+                                    }
+                                }
+
+                            } while (!int.TryParse(bookPick, out checkBook) | checkBook > searchList.Count);
+                            CheckOut(currentInventory, searchList[checkBook - 1]);
+                        }
                     }
 
                     if (input == "author")
                     {
-                        Console.Write("Please enter an author ");
+                        Console.Write("Please enter an author: ");
                         string search = Console.ReadLine();
                         while (Validate.NullCheck(search))
                         {
-                            Console.Write("Please enter a title:");
+                            Console.Write("Please enter an author:");
                             search = Console.ReadLine();
                         }
-                        searchList = SearchByTitle(currentInventory, search);
+                        searchList = SearchByAuthor(currentInventory, search);
+
                         Console.WriteLine($"\nSearch Results:");
-                        int count = 1;
+                        int count = 0;
                         foreach (Book item in searchList)
                         {
-                            Console.WriteLine($"{count}) {item.Title} by {item.Author}");
+                            Console.WriteLine($"{count + 1}) {item.Title} by {item.Author}");
                             count++;
                         }
                         Console.WriteLine();
 
-                        Console.WriteLine("Please select the number of the book you would like to rent.");
-                        int bookPick = int.Parse(Console.ReadLine());
-                        while (Validate.NullCheck(Convert.ToString(bookPick)))
+                        if (count == 0)
                         {
-                            Console.Write("Please enter a correct choice:");
-                            bookPick = int.Parse(Console.ReadLine());
+                            Console.WriteLine("No search results were found, please try again.");
                         }
-                        CheckOut(currentInventory, searchList[bookPick - 1]);
+                        if (count >= 1)
+                        {
+                            Console.WriteLine("Please enter the number of the book you would like to check out.");
+                            string bookPick = Console.ReadLine();
+                            int checkBook;
+
+                            do
+                            {
+                                if (Validate.NullCheck(bookPick))
+                                {
+                                    Console.WriteLine("Please enter a valid input.");
+                                    bookPick = Console.ReadLine();
+                                }
+
+                                if (int.TryParse(bookPick, out checkBook))
+                                {
+                                    checkBook = int.Parse(bookPick);
+                                    if (checkBook >= searchList.Count)
+                                    {
+                                        Console.WriteLine("That number does not exist, please enter a number above.");
+                                        bookPick = Console.ReadLine();
+                                    }
+                                }
+
+                            } while (!int.TryParse(bookPick, out checkBook) | checkBook > searchList.Count);
+
+                            CheckOut(currentInventory, searchList[checkBook - 1]);
+                        }
                     }
 
                 }
@@ -174,7 +234,7 @@ namespace LibraryMidterm
                         }
                     }
 
-                    Console.WriteLine("Please select the number of the book you would like to rent.");
+                    Console.WriteLine("Please select the number of the book you would like to return.");
                     int bookPick = int.Parse(Console.ReadLine());
                     Return(currentInventory, outList[bookPick - 1]);
 
@@ -245,7 +305,7 @@ namespace LibraryMidterm
 
             } while (choice.ToLower() != "yes" && choice.ToLower() != "no");
 
-            
+
             if (choice.ToLower() == "yes" && !yourBook.Status)
             {
                 yourBook.Status = true;
@@ -287,7 +347,7 @@ namespace LibraryMidterm
             //close the text file when done with File I/O operations
             sr.Close();
         }
-        
+
         // Search method, adds hits to a list and returns the list for viewing to the user.
         private static List<Book> SearchByTitle(List<Book> bookList, string input)
         {
