@@ -14,7 +14,7 @@ namespace LibraryMidterm
                 if (Regex.IsMatch(input, pattern))
                 {
                     return true;
-                } 
+                }
             }
             return false;
         }
@@ -31,18 +31,29 @@ namespace LibraryMidterm
             }
         }
 
-        public static bool OptionInputValidation(string input)
+        public static string OptionInputValidation(string input)
         {
             {
-                if (input != "1" && input != "2" && input != "3" && input != "3" && input != "4" && input != "5" && input != "6")
+
+                do
                 {
-                    Console.WriteLine("Enter a valid input please");
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                    while (NullCheck(input))
+                    {
+                        Console.WriteLine("Please enter a valid option.");
+                        input = Console.ReadLine();
+                    }
+
+                    if (int.Parse(input) > 6 | int.Parse(input) < 1)
+                    {
+                        Console.WriteLine("Please enter a valid option.");
+                        input = Console.ReadLine();
+                    }
+
+                } while (!NullCheck(input) && int.Parse(input) > 6);
+
+                return input;
+
+
             }
         }
     }

@@ -22,8 +22,10 @@ namespace LibraryMidterm
             {
                 // Initializes the POS for the user and gives them visual options to select what they want to do
                 Options();
-                var choice = Console.ReadLine();
-                Validate.OptionInputValidation(choice);
+                var choice = Validate.OptionInputValidation(Console.ReadLine());
+
+                
+
                 if (choice == "1")
                 {
                     //Prints the current list of books, allowing you to select between all books and available books
@@ -100,7 +102,7 @@ namespace LibraryMidterm
                     {
                         if (Validate.NullCheck(input))
                         {
-                            Console.WriteLine("Please enter a valid input: ");
+                            Console.WriteLine("Please enter a 'Title' or 'Author': ");
                             input = Console.ReadLine();
                         }
 
