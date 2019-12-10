@@ -24,7 +24,7 @@ namespace LibraryMidterm
                 Options();
                 var choice = Validate.OptionInputValidation(Console.ReadLine());
 
-                
+
 
                 if (choice == "1")
                 {
@@ -142,25 +142,21 @@ namespace LibraryMidterm
                             string bookPick = Console.ReadLine();
                             int checkBook;
 
-                            do
+                            if (Validate.NullCheck(bookPick))
                             {
-                                if (Validate.NullCheck(bookPick))
+                                Console.WriteLine("Please enter a valid input.");
+                                bookPick = Console.ReadLine();
+                            }
+
+                            if (int.TryParse(bookPick, out checkBook))
+                            {
+                                checkBook = int.Parse(bookPick);
+                                if (checkBook > searchList.Count)
                                 {
-                                    Console.WriteLine("Please enter a valid input.");
+                                    Console.WriteLine("That number does not exist, please enter a number above.");
                                     bookPick = Console.ReadLine();
                                 }
-
-                                if (int.TryParse(bookPick, out checkBook))
-                                {
-                                    checkBook = int.Parse(bookPick);
-                                    if (checkBook >= searchList.Count)
-                                    {
-                                        Console.WriteLine("That number does not exist, please enter a number above.");
-                                        bookPick = Console.ReadLine();
-                                    }
-                                }
-
-                            } while (!int.TryParse(bookPick, out checkBook) | checkBook > searchList.Count);
+                            }
                             CheckOut(currentInventory, searchList[checkBook - 1]);
                         }
                     }
@@ -191,30 +187,25 @@ namespace LibraryMidterm
                         }
                         if (count >= 1)
                         {
-                            Console.WriteLine("Please enter the number of the book you would like to check out.");
-                            string bookPick = Console.ReadLine();
-                            int checkBook;
+                                Console.WriteLine("Please enter the number of the book you would like to check out.");
+                                string bookPick = Console.ReadLine();
+                                int checkBook;
 
-                            do
-                            {
                                 if (Validate.NullCheck(bookPick))
                                 {
                                     Console.WriteLine("Please enter a valid input.");
                                     bookPick = Console.ReadLine();
                                 }
 
-                                if (int.TryParse(bookPick, out checkBook))
+                            if (int.TryParse(bookPick, out checkBook))
+                            {
+                                checkBook = int.Parse(bookPick);
+                                if (checkBook > searchList.Count)
                                 {
-                                    checkBook = int.Parse(bookPick);
-                                    if (checkBook >= searchList.Count)
-                                    {
-                                        Console.WriteLine("That number does not exist, please enter a number above.");
-                                        bookPick = Console.ReadLine();
-                                    }
+                                    Console.WriteLine("That number does not exist, please enter a number above.");
+                                    bookPick = Console.ReadLine();
                                 }
-
-                            } while (!int.TryParse(bookPick, out checkBook) | checkBook > searchList.Count);
-
+                            }
                             CheckOut(currentInventory, searchList[checkBook - 1]);
                         }
                     }
@@ -236,9 +227,16 @@ namespace LibraryMidterm
                         }
                     }
 
-                    Console.WriteLine("Please select the number of the book you would like to return.");
-                    int bookPick = int.Parse(Console.ReadLine());
-                    Return(currentInventory, outList[bookPick - 1]);
+                    if (outList.Count == 0)
+                    {
+                        Console.WriteLine("There are no books to return, please select a different option.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please select the number of the book you would like to return.");
+                        int bookPick = int.Parse(Console.ReadLine());
+                        Return(currentInventory, outList[bookPick - 1]);
+                    }
 
                 }
 
@@ -282,7 +280,6 @@ namespace LibraryMidterm
                 Console.WriteLine($"You have checked out {yourBook.Title} by {yourBook.Author}.");
                 Console.WriteLine($"It is due on {yourBook.Date.ToString("MM/dd/yyyy")}.");
                 SaveCurrentInventory();
-                DisplayCurrentInventory();
             }
 
         }
