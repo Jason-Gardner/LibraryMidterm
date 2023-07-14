@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using System.Text;
 
-namespace LibraryMidterm
+namespace LibraryMidterm.Validation
 {
     class Validate
     {
         public static bool Validator(string input, string pattern)
         {
-            if (!Validate.NullCheck(input))
+            if (!NullCheck(input))
             {
                 if (Regex.IsMatch(input, pattern))
                 {
