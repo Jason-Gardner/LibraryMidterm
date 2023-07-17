@@ -93,7 +93,7 @@ namespace LibraryMidterm.Services
             Console.WriteLine("Here are the currently checked out books:");
 
             foreach (var item in from Book item in currentInventory
-                                 where item.Status == BookStatusEnum.CheckedOut
+                                 where item.CheckedOut == (int)BookStatusEnum.CheckedOut
                                  select item)
             {
                 Console.WriteLine($"{count}) {item.Title} by {item.Author}");
@@ -160,7 +160,7 @@ namespace LibraryMidterm.Services
         private static void DisplayAvailableTitles(List<Book> currentInventory)
         {
             foreach (var item in from Book item in currentInventory
-                                 where item.Status == BookStatusEnum.Available
+                                 where item.CheckedOut == (int)BookStatusEnum.Available
                                  select item)
             {
                 Console.WriteLine($"{item.Title,-40} by {item.Author,-25} Available");
@@ -171,13 +171,13 @@ namespace LibraryMidterm.Services
         {
             foreach (var item in currentInventory)
             {
-                if (item.Status == BookStatusEnum.Available)
+                if (item.CheckedOut == (int)BookStatusEnum.Available)
                 {
                     Console.WriteLine($"{item.Title,-40} by {item.Author,-25} Available");
                 }
                 else
                 {
-                    Console.WriteLine($"{item.Title,-40} by {item.Author,-25} Unavailable until {item.Date,-20:MM/dd/yyyy}");
+                    //Console.WriteLine($"{item.Title,-40} by {item.Author,-25} Unavailable until {item.Date,-20:MM/dd/yyyy}");
                 }
             }
         }

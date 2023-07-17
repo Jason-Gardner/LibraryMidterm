@@ -1,4 +1,4 @@
-﻿using LibraryMidterm.Model;
+﻿using LibraryMidtermData.Model;
 using LibraryMidterm.Validation;
 using System;
 using System.Collections.Generic;
@@ -29,12 +29,12 @@ namespace LibraryMidterm.Services
 
             } while (choice.ToLower() != "yes" && choice.ToLower() != "no");
 
-            if (choice.ToLower() == "yes" && yourBook.Status == BookStatusEnum.Available)
+            if (choice.ToLower() == "yes" && yourBook.CheckedOut == (int)BookStatusEnum.Available)
             {
-                yourBook.Status = BookStatusEnum.CheckedOut;
-                yourBook.Date = DateTime.Now.AddDays(14);
+                yourBook.CheckedOut = (int)BookStatusEnum.CheckedOut;
+                //yourBook.Date = DateTime.Now.AddDays(14);
                 Console.WriteLine($"You have checked out {yourBook.Title} by {yourBook.Author}.");
-                Console.WriteLine($"It is due on {yourBook.Date.ToString("MM/dd/yyyy")}.");
+                //Console.WriteLine($"It is due on {yourBook.Date.ToString("MM/dd/yyyy")}.");
                 Inventory.SaveCurrentInventory(bookList);
             }
         }
@@ -178,18 +178,18 @@ namespace LibraryMidterm.Services
             } while (choice.ToLower() != "yes" && choice.ToLower() != "no");
 
 
-            if (choice.ToLower() == "yes" && yourBook.Status == BookStatusEnum.CheckedOut)
+            if (choice.ToLower() == "yes" && yourBook.CheckedOut == (int)BookStatusEnum.CheckedOut)
             {
-                yourBook.Status = BookStatusEnum.Available;
-                yourBook.Date = DateTime.Now;
+                yourBook.CheckedOut = (int)BookStatusEnum.Available;
+                //yourBook.Date = DateTime.Now;
                 Console.WriteLine($"You have checked in {yourBook.Title} by {yourBook.Author}.");
                 Console.WriteLine("Thank you!");
                 Inventory.SaveCurrentInventory(bookList);
             }
 
-            if (choice.ToLower() == "yes" && yourBook.Status == BookStatusEnum.CheckedOut)
+            if (choice.ToLower() == "yes" && yourBook.CheckedOut == (int)BookStatusEnum.CheckedOut)
             {
-                Console.WriteLine($"That book is not available until {yourBook.Date.ToString("MM/dd/yyyy")}");
+                //Console.WriteLine($"That book is not available until {yourBook.Date.ToString("MM/dd/yyyy")}");
                 Inventory.DisplayCurrentInventory(bookList);
             }
         }

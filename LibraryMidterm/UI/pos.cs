@@ -1,4 +1,4 @@
-﻿using LibraryMidterm.Model;
+﻿using LibraryMidtermData.Model;
 using LibraryMidterm.Services;
 using LibraryMidterm.Validation;
 using System;
@@ -9,13 +9,10 @@ namespace LibraryMidterm.UI
     class POS
     {
         //Static list we will use to track the movement of books and checkout dates
-        public static List<Book> currentInventory = new List<Book>();
+        public static List<Book> currentInventory = Inventory.GetCurrentInventory();
 
         public static void StartBookPOS()
         {
-            // Builds the current book inventory from a text file using streamreader
-            currentInventory = Inventory.GetCurrentInventory();
-
             int res = 0;
 
             do

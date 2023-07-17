@@ -1,0 +1,6 @@
+{
+  "Settings": {
+    "connectionString": 
+      "connectionString=\"Data Source=THISISNOISE\\SQLEXPRESS;Initial Catalog=librarydb;Integrated Security=True\""
+  }
+}
